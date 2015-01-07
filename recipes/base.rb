@@ -24,16 +24,26 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-
+include_recipe "python"
 ## Base recipe
 # This recipe as a dependency of every shinken elements
+
+group node["shinken"]["group"] do
+  action :create
+end
+
+user node["shinken"]["user"] do
+  action :create
+  comment "Shinken User"
+  gid node["shinken"]["group"]
+end
 
 ### Run_state 
 # The run state is used to store content during the run and to generate content
 # at the end.
 node.run_state["shinken"] = {}
 
-if node['platform_family'] == "debian"
+if node['platform_family'] == "debian" and node["shinken"]["install_type"] == "package"
   ### Packaging
   #### Shinken's repository
   # Shinken resides in its own directory
@@ -49,7 +59,15 @@ end
 #### Package install
 # We'll install core package which contains common files and common
 # configuration
-package node["shinken"]["core_package"]
+if node["shinken"]["install_type"] == "package"
+  package node["shinken"]["core_package"]
+elsif node["shinken"]["install_type"] == "pip"
+  python_pip "shinken" do
+    action :install
+    version node["shinken"]["version"]
+  end
+end
+  
 
 template "shinken/default/debian" do
   path   "/etc/default/shinken"

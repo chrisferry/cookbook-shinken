@@ -23,8 +23,9 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-
-package "shinken-receiver"
+if node["shinken"]["install_type"] == "package"
+  package "shinken-receiver"
+end
 
 if node[:platform] == "centos"
   cookbook_file "/etc/init.d/shinken-receiver" do

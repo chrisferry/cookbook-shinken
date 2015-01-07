@@ -1,5 +1,7 @@
-include_recipe "mongodb::10gen_repo"
-include_recipe "mongodb"
+if node["shinken"]["local_mongodb"]
+  include_recipe "mongodb::10gen_repo"
+  include_recipe "mongodb"
+end
 include_recipe "python"
 
 package "gcc"

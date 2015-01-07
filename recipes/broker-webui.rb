@@ -33,7 +33,7 @@ include_recipe "shinken::broker"
 
 ### Package install
 # For now we only handle debian packages
-if node['platform_family'] == "debian"
+if node["platform_family"] == "debian" and node["shinken"]["install_type"] == "package"
   package "shinken-webui"
 end
 

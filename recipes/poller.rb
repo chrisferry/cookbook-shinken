@@ -29,7 +29,9 @@
 
 include_recipe "shinken::base"
 
-package "shinken-poller"
+if node["shinken"]["install_type"] == "package"
+  package "shinken-poller"
+end
 
 if node[:platform] == "centos"
   cookbook_file "/etc/init.d/shinken-poller" do

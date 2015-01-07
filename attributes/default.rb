@@ -27,16 +27,14 @@
 case node['platform_family']
 when 'rhel'
   default["shinken"]["core_package"] = "shinken"
-  default["shinken"]["run_dir"] = "/var/run/shinken"
-  default["shinken"]["work_dir"] = "/var/lib/shinken"
   default["shinken"]["bin_dir"] = "/usr/sbin"
 else
   default["shinken"]["core_package"] = "shinken-core"
-  default["shinken"]["run_dir"] = "/var/run/nagios"
-  default["shinken"]["work_dir"] = "/var/lib/nagios"
   default["shinken"]["bin_dir"] = "/usr/bin"
 end
 
+default["shinken"]["run_dir"] = "/var/run/shinken"
+default["shinken"]["work_dir"] = "/var/lib/shinken"
 default["shinken"]["log_dir"] = "/var/log/shinken"
 
 default["shinken"]["scheduler"  ]["port"] = 7768
@@ -46,6 +44,8 @@ default["shinken"]["poller"     ]["port"] = 7771
 default["shinken"]["broker"     ]["port"] = 7772
 default["shinken"]["receiver"   ]["port"] = 7773
 
+default["shinken"]["user"]  = "shinken"
+default["shinken"]["group"] = "shinken"
 
 default_variables = {
   "spare"              => 0,
@@ -76,4 +76,7 @@ default["shinken"]["reactionner"]["variables"] = default_variables.merge({
   "max_workers"       => 15
 })
 
+default["shinken"]["local_mongodb"] = true
 default["shinken"]["auto_poller_tags"] = false
+default["shinken"]["install_type"] = "pip" # package or pip
+default["shinken"]["version"] = "2.0.3"

@@ -24,7 +24,9 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-package "shinken-reactionner"
+if node["shinken"]["install_type"] == "package"
+  package "shinken-reactionner"
+end
 
 if node[:platform] == "centos"
   cookbook_file "/etc/init.d/shinken-reactionner" do

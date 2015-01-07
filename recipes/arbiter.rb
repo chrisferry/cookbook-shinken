@@ -33,9 +33,9 @@
 include_recipe "shinken::base"
 
 ### Package install
-
-package "shinken-arbiter"
-
+if node["shinken"]["install_type"] == "package"
+  package "shinken-arbiter"
+end
 ### Layout
 #### Directories
 

@@ -33,8 +33,9 @@
 include_recipe "shinken::base"
 ### Package install
 # For now we only handle debian packages
-
-package "shinken-broker"
+if node["shinken"]["install_type"] == "package"
+  package "shinken-broker"
+end
 
 ### Service stuff
 if node[:platform] == "centos"
