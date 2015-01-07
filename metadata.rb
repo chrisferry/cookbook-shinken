@@ -1,3 +1,4 @@
+name             "shinken"
 maintainer       "Arthur Gautier"
 maintainer_email "superbaloo@gmail.com"
 license          "MIT"
